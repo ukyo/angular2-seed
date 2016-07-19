@@ -1,14 +1,18 @@
 const {
+  BasicEvaluatedExpression,
+  ConstDependency,
+  ContextReplacementPlugin,
   HotModuleReplacementPlugin,
   DefinePlugin,
   optimize: {
-    CommonsChunkPlugin
+    CommonsChunkPlugin,
+    DedupePlugin
   }
 } = require('webpack');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin.js');
 const {ForkCheckerPlugin} = require('awesome-typescript-loader');
 
-// update WebpackConfig type definition below and send a Pull-Request
+
 function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
   const CONSTANTS = {
@@ -19,10 +23,10 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
   };
 
   return {
-    cache: true,
+    cache: false,
     // devtool: 'hidden-source-map',
-    // devtool: 'source-map',
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'source-map',
+    // devtool: 'cheap-module-eval-source-map',
 
 
     entry: {
@@ -39,9 +43,24 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     },
 
     module: {
+      exprContextRequest: options.srcPath, // full path to your ./src
+      exprContextRegExp: /.*\.ts/, // provide better regexp
+      exprContextCritical: false,
+      preLoaders: [
+        {
+          test: /systemjs_component_resolver\.js$/,
+          loader: 'string-replace-loader',
+          query: {
+            search: 'lang_1\\.global.*[\\n\\r]\\s*\\.System.import',
+            replace: 'System.import',
+            flags: 'g'
+          }
+        },
+        { test: /\.d\.ts$/, loader: 'ignore-loader' },
+      ],
       loaders: [
         // Support for .ts files.
-        { test: /\.ts$/,   loader: 'ts-loader' },
+        { test: /\.ts$/,   loader: 'ts-loader', exclude: [/\.(spec|e2e|d)\.ts$/] },
         { test: /\.json$/, loader: 'json-loader' },
         { test: /\.html/,  loader: 'raw-loader' },
         { test: /\.css$/,  loader: 'raw-loader' },
@@ -58,7 +77,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     ],
 
     resolve: {
-      extensions: ['.ts', '.js', '.json'],
+      extensions: ['', '.ts', '.js', '.json'],
     },
 
     devServer: {
@@ -104,11 +123,13 @@ interface WebpackConfig {
   devtool?: string;
   entry: Entry;
   output: any;
-  module?: {
-    loaders?: Array<any>
-  };
+  module?: any;
+  // module?: {
+  //   loaders?: Array<any>
+  // };
   plugins?: Array<any>;
   resolve?: {
+    root?: string;
     extensions?: Array<string>;
   };
   devServer?: {

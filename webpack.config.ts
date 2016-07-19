@@ -1,5 +1,7 @@
 const path = require('path');
 const distPath = path.resolve(__dirname, 'dist');
+const rootPath = path.resolve(__dirname);
+const srcPath = path.join(rootPath, 'src');
 
 /**
  * @author: @AngularClass
@@ -23,6 +25,8 @@ switch (process.env.NODE_ENV) {
 
 module.exports = (options: EnvOptions = {}) => {
   options.distPath = options.distPath || distPath;
+  options.rootPath = options.rootPath || rootPath;
+  options.srcPath = options.srcPath || srcPath;
   console.log('Env Options: ', JSON.stringify(options, null, 2));
   return configFn(options);
 };

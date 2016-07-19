@@ -1,9 +1,25 @@
 import {bootstrap} from '@angular/platform-browser-dynamic';
-import {App} from './app/app.component';
+import {provideRouter} from '@angular/router';
+import {App, Home} from './app/app.component';
 
+import {RuntimeCompiler} from '@angular/compiler';
+import {SystemJsComponentResolver, SystemJsCmpFactoryResolver, ComponentResolver} from '@angular/core';
+
+var routes = [
+  { path: '', component: Home},
+  { path: 'about', component: './app/about.ts#About'}
+]
 // Angular 2
 export function main() {
-  return bootstrap(App, []);
+  return bootstrap(App, [
+    provideRouter(routes),
+    {
+      provide: ComponentResolver,
+      useFactory: (r) => new SystemJsComponentResolver(r),
+      // useFactory: () => new SystemJsCmpFactoryResolver(),
+      deps: [RuntimeCompiler]
+    }
+  ]);
 }
 
 
