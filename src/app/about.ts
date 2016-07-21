@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'home',
-  template: 'Home'
+  selector: 'about',
+  template: 'About'
 })
-export class Home {
+export class About {
   constructor() {
   }
 }
