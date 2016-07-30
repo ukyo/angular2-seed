@@ -1,15 +1,14 @@
-import {Component} from '@angular/core';
-import {ROUTER_DIRECTIVES} from '@angular/router';
+import { Component } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
-
-@Component({
-  selector: 'home',
-  template: 'Home'
-})
-export class Home {
-  constructor() {
-  }
-}
+// @Component({
+//   selector: 'home',
+//   template: 'Home'
+// })
+// export class Home {
+//   constructor() {
+//   }
+// }
 
 @Component({
   selector: 'app',
@@ -24,6 +23,7 @@ export class Home {
   <main>
     <a href="#" [routerLink]="['']">Home</a>
     <a href="#" [routerLink]="['about']">About</a>
+    <a href="#" [routerLink]="['yolo']">Yolo</a>
 
     <div>Your Content Here</div>
     <router-outlet></router-outlet>

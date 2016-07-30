@@ -43,7 +43,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     },
 
     module: {
-      
+
       // Start AngularSystemJS
       exprContextRequest: options.srcPath, // full path to your ./src
       exprContextRegExp: /.*\.ts/, // provide better regexp
@@ -64,7 +64,14 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
       loaders: [
         // Support for .ts files.
-        { test: /\.ts$/,   loader: 'ts-loader', exclude: [/\.(spec|e2e|d)\.ts$/] },
+        {
+          test: /\.ts$/,
+          loaders: [
+            'awesome-typescript-loader',
+            '@angularclass/conventions-loader'
+          ],
+          exclude: [/\.(spec|e2e|d)\.ts$/]
+        },
         { test: /\.json$/, loader: 'json-loader' },
         { test: /\.html/,  loader: 'raw-loader' },
         { test: /\.css$/,  loader: 'raw-loader' },

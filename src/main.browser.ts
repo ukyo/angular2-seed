@@ -1,13 +1,20 @@
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {provideRouter} from '@angular/router';
-import {App, Home} from './app/app.component';
+import {
+  App,
+  Yolo
+} from './app';
 
 import {RuntimeCompiler} from '@angular/compiler';
 import {SystemJsComponentResolver, SystemJsCmpFactoryResolver, ComponentResolver} from '@angular/core';
 
+
+import { Home } from './app/home';
+
 var routes = [
   { path: '', component: Home},
-  { path: 'about', component: './app/about.ts#About'}
+  { path: 'about', component: './app/about.ts#About'},
+  { path: 'yolo', component: Yolo}
 ]
 // Angular 2
 export function main() {
