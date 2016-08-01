@@ -1,33 +1,24 @@
-import {bootstrap} from '@angular/platform-browser-dynamic';
-import {provideRouter} from '@angular/router';
-import {
-  App,
-  Yolo
-} from './app';
+import { bootstrap } from '@angular/platform-browser-dynamic';
 
-import {RuntimeCompiler} from '@angular/compiler';
-import {SystemJsComponentResolver, SystemJsCmpFactoryResolver, ComponentResolver} from '@angular/core';
+// add in ./browser-module
+import browserModule from './browser-module';
 
-
-import { Home } from './app/home';
-
-var routes = [
-  { path: '', component: Home},
-  { path: 'about', component: './app/about.ts#About'},
-  { path: 'yolo', component: Yolo}
-]
 // Angular 2
 export function main() {
-  return bootstrap(App, [
-    provideRouter(routes),
-    {
-      provide: ComponentResolver,
-      useFactory: (r) => new SystemJsComponentResolver(r),
-      // useFactory: () => new SystemJsCmpFactoryResolver(),
-      deps: [RuntimeCompiler]
-    }
-  ]);
+  return bootstrap(browserModule.entryComponent, browserModule.providers);
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
