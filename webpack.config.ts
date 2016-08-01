@@ -15,6 +15,7 @@ const {
     CommonsChunkPlugin,
     DedupePlugin
   }
+
 } = require('webpack');
 const {ForkCheckerPlugin} = require('awesome-typescript-loader');
 const resolveNgRoute = require('@angularclass/resolve-angular-routes')
@@ -36,7 +37,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
   };
 
   return {
-    cache: false,
+    cache: true,
     // devtool: 'hidden-source-map',
     devtool: 'source-map',
     // devtool: 'cheap-module-eval-source-map',

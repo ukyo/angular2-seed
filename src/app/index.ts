@@ -1,4 +1,4 @@
-import {exportNgModules} from './ng-module-helpers';
+import {exportNgModules} from './_helpers/ng-module';
 
 import aboutModule from './about';
 import homeModule from './home';
