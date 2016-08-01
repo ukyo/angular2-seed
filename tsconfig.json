@@ -4,8 +4,18 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": false,
+    "noEmitHelpers": true,
     "pretty": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "lib": ["es5", "dom"],
+    "strictNullChecks": false,
+    "baseUrl": "./src",
+    "paths": [
+    ],
+    "types": [
+      "core-js",
+      "node"
+    ]
   },
   "exclude": [
     "node_modules"
