@@ -60,10 +60,11 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
       preLoaders: [
         // fix angular2
         {
-          test: /systemjs_component_resolver\.js$/,
+          // test: /system_js_ng_module_factory_loader\.js$/,
+          test: /(systemjs_component_resolver|system_js_ng_module_factory_loader)\.js$/,
           loader: 'string-replace-loader',
           query: {
-            search: 'lang_1\\.global.*[\\n\\r]\\s*\\.System.import',
+            search: '(lang_1(.*[\\n\\r]\\s*\\.|\\.))?(global(.*[\\n\\r]\\s*\\.|\\.))?(System|SystemJS)(.*[\\n\\r]\\s*\\.|\\.)import',
             replace: 'System.import',
             flags: 'g'
           }
