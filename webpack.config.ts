@@ -60,7 +60,6 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
       preLoaders: [
         // fix angular2
         {
-          // test: /system_js_ng_module_factory_loader\.js$/,
           test: /(systemjs_component_resolver|system_js_ng_module_factory_loader)\.js$/,
           loader: 'string-replace-loader',
           query: {
@@ -69,8 +68,8 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
             flags: 'g'
           }
         }
+        // end angular2 fix
       ],
-      // End AngularSystemJS
 
       loaders: [
         // Support for .ts files.
@@ -91,11 +90,14 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
 
     plugins: [
+      // fix angular2
       new ContextReplacementPlugin(
         /angular\/core\/src\/linker/,
         root('./src'),
         resolveNgRoute(root('./src'))
       ),
+      // end angular2 fix
+
       new HotModuleReplacementPlugin(),
       new ForkCheckerPlugin(),
       new CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity }),
