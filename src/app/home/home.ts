@@ -8,7 +8,13 @@ export class Home {
   }
 }
 
-@Component({})
+@Component({
+  template: `
+    <div>
+      YOLO
+    </div>
+  `
+})
 export class Yolo {
   constructor() {
     console.log('Yolo');

@@ -1,11 +1,38 @@
-import { bootstrap } from '@angular/platform-browser-dynamic';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 
-// add in ./browser-module
-import browserModule from './browser-module';
+import { App } from './app/app';
+import appModule from './app';
 
-// Angular 2
+@NgModule({
+  bootstrap: [
+    App
+  ],
+  declarations: [
+    App
+  ],
+  imports: [
+    // Angular 2
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    RouterModule.forRoot([], {
+      useHash: true
+    }),
+    // app
+    appModule
+    // vendors
+  ],
+  providers: []
+})
+class MainModule {}
+
 export function main() {
-  return bootstrap(browserModule.entryComponent, browserModule.providers);
+  return platformBrowserDynamic().bootstrapModule(MainModule);
 }
 
 

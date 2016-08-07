@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   template: `
-    About
+    <h2>About</h2>
+
     <form #form="ngForm" (ngSubmit)="onSubmit(form.value, form)" novalidate>
       <div>
         <label>

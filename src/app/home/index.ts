@@ -1,12 +1,16 @@
-import {exportNgModules} from '../_helpers/ng-module';
-
-import {Home} from './home';
+import { NgModule } from '@angular/core';
+import { Yolo } from './home';
 
 export * from './home';
-export default exportNgModules({
-  entryComponent: Home,
-  routes: [],
-  directives: [],
-  providers: [],
-  pipes: []
-});
+
+@NgModule({
+  declarations: [
+    // Components / Directives/ Pipes
+    Yolo
+  ],
+  imports: [
+  ],
+})
+export default class HomeModule {
+}
+

@@ -1,31 +1,26 @@
-import {exportNgModules} from './_helpers/ng-module';
+import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 
-import aboutModule from './about';
-import homeModule from './home';
+import homeModule, { Home } from './home';
 
-import { App } from './app';
-import { ROUTES, ROUTE_PROVIDERS } from './routes';
+const ROUTER_CONFIG = [
+  { path: '', component: Home, pathMatch: 'full' },
+  { path: 'about', loadChildren: './+about' },
+];
 
-export * from './app';
-export * from './routes';
-export default exportNgModules({
-  entryComponent: App,
-  ngModules: [
-    aboutModule,
-    homeModule
-  ],
-  routes: [
-    ...ROUTES
-  ],
-  directives: [],
+@NgModule({
   providers: [
-    ...ROUTE_PROVIDERS
   ],
-  pipes: []
-});
-
-
-
-
-
+  declarations: [
+    // Components / Directives/ Pipes
+    Home,
+  ],
+  imports: [
+    RouterModule.forChild(ROUTER_CONFIG),
+    homeModule,
+  ],
+})
+export default class AppModule {
+  static routes = ROUTER_CONFIG
+}
 
