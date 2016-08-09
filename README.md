@@ -1,9 +1,13 @@
 # Angular 2 Seed
-> A simple Angular 2 Seed featuring Angular 2 and Webpack 2 with tree shaking
+> A simple Angular 2 Seed featuring Angular 2 and Webpack 2 with async routes.
 
-`npm install`
-`npm start`
 
+```
+npm install
+npm start
+```
+
+Everything in this repo will be merged into [angular2-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter)
 
 <p align="center">
   <a href="http://courses.angularclass.com/courses/angular-2-fundamentals" target="_blank">
