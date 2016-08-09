@@ -1,7 +1,7 @@
 {
-  "name": "angular2-webpack2-starter",
+  "name": "angular2-seed",
   "version": "0.0.0",
-  "description": "An Angular 2 Starter kit featuring Angular 2 and Webpack 2",
+  "description": "A simple Angular 2 Seed featuring Angular 2 and Webpack 2",
   "author": "PatrickJS <github@gdi2290.com>",
   "main": "index.js",
   "files": [
