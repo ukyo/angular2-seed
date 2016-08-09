@@ -7,6 +7,18 @@ npm install
 npm start
 ```
 
+## Features
+* Webpack 2
+  * `System.import`
+* TypeScript 2
+  * @types
+* Angular 2
+  * Async loading
+* AngularClass
+  * @angularclass/form-validator
+  * @angularclass/conventions-loader
+  * angular2/hmr
+
 Everything in this repo will be merged into [angular2-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter)
 
 <p align="center">
