@@ -67,6 +67,15 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
             replace: 'System.import',
             flags: 'g'
           }
+        },
+        {
+          test: /.js$/,
+          loader: 'string-replace-loader',
+          query: {
+            search: 'moduleId: module.id,',
+            replace: '',
+            flags: 'g'
+          }
         }
         // end angular2 fix
       ],
