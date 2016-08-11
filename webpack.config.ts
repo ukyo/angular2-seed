@@ -101,7 +101,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     plugins: [
       // fix angular2
       new ContextReplacementPlugin(
-        /angular\/core\/src\/linker/,
+        /angular\/core\/(esm\/src|src)\/linker/,
         root('./src'),
         resolveNgRoute(root('./src'))
       ),
