@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["es5", "dom"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "outDir": "ngfactory"
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "angularCompilerOptions": {
+    "genDir": "ngfactory",
+    "skipMetadataEmit": false
+  },
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "atom": { "rewriteTsconfig": false }
+}

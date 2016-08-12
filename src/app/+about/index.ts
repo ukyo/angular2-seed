@@ -20,7 +20,8 @@ export const ROUTER_CONFIG = [
     BrowserModule
   ]
 })
-export default class AboutModule {
+export class AboutModule {
   static routes = ROUTER_CONFIG;
 }
 
+export default AboutModule

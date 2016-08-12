@@ -1,3 +1,5 @@
+import webpackConfig from 'webpack.config';
+
 import 'core-js/es6';
 import 'core-js/es7/reflect';
 import 'ts-helpers';
@@ -93,6 +95,40 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
       new DefinePlugin(CONSTANTS),
       new ProgressPlugin({}),
 
+      // new NormalModuleReplacementPlugin(
+      //   /facade\/async/,
+      //   root('node_modules/@angular/core/esm/src/facade/async.js')
+      // ),
+      // new NormalModuleReplacementPlugin(
+      //   /facade\/lang/,
+      //   root('node_modules/@angular/core/esm/src/facade/lang.js')
+      // ),
+      // new NormalModuleReplacementPlugin(
+      //   /facade\/base_wrapped_exception/,
+      //   root('node_modules/@angular/core/esm/src/facade/base_wrapped_exception.js')
+      // ),
+      // new NormalModuleReplacementPlugin(
+      //   /facade\/collection/,
+      //   root('node_modules/@angular/core/esm/src/facade/collection.js')
+      // ),
+      // new NormalModuleReplacementPlugin(
+      //   /facade\/exception_handler/,
+      //   root('node_modules/@angular/core/esm/src/facade/exception_handler.js')
+      // ),
+      // new NormalModuleReplacementPlugin(
+      //   /facade\/exceptions/,
+      //   root('node_modules/@angular/core/esm/src/facade/exceptions.js')
+      // ),
+      // new NormalModuleReplacementPlugin(
+      //   /facade\/math/,
+      //   root('node_modules/@angular/core/esm/src/facade/math.js')
+      // ),
+      // new NormalModuleReplacementPlugin(
+      //   /facade\/promise/,
+      //   root('node_modules/@angular/core/esm/src/facade/promise.js')
+      // ),
+
+
       new UglifyJsPlugin({
         // beautify: true,
         // comments: true,
@@ -181,7 +217,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
 
 // Export
-export default webpackConfig;
+module.exports = webpackConfig;
 
 
 // Types

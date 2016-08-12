@@ -4,16 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-
-import { App } from './app/app';
-import appModule from './app';
+// import { ANGULARCLASS_FORM_VALIDATOR_DIRECTIVES } from '@angularclass/form-validators'
+import { App, AppModule } from './app';
 
 @NgModule({
   bootstrap: [
     App
   ],
   declarations: [
-    App
+    App,
+    // ...ANGULARCLASS_FORM_VALIDATOR_DIRECTIVES
   ],
   imports: [
     // Angular 2
@@ -24,12 +24,12 @@ import appModule from './app';
       useHash: true
     }),
     // app
-    appModule
+    AppModule
     // vendors
   ],
   providers: []
 })
-class MainModule {}
+export class MainModule {}
 
 export function main() {
   return platformBrowserDynamic().bootstrapModule(MainModule);

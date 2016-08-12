@@ -1,9 +1,10 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import homeModule, { Home } from './home';
+import { HomeModule, Home } from './home';
+export { App } from './app';
 
-const ROUTER_CONFIG = [
+export const ROUTER_CONFIG = [
   { path: '', component: Home, pathMatch: 'full' },
   { path: 'about', loadChildren: './+about' },
 ];
@@ -17,10 +18,11 @@ const ROUTER_CONFIG = [
   ],
   imports: [
     RouterModule.forChild(ROUTER_CONFIG),
-    homeModule,
+    HomeModule,
   ],
 })
-export default class AppModule {
+export class AppModule {
   static routes = ROUTER_CONFIG
 }
 
+export default AppModule

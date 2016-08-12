@@ -11,6 +11,7 @@ export * from './home';
   imports: [
   ],
 })
-export default class HomeModule {
+export class HomeModule {
 }
 
+export default HomeModule;

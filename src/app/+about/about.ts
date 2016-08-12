@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
+  selector: 'about',
   template: `
     <h2>About</h2>
 
@@ -10,15 +11,13 @@ import { Component } from '@angular/core';
           <input
             #inputEmail="ngModel"
             name="inputEmail"
-            [(ngModel)]="email"
+            [(ngModel)]="localState.email"
             ac-is-email
           >
         </label>
       </div>
 
-      <div *ngIf="form.submitted && inputEmail?.errors?.isEmail" style="background-color: red">
         Please use a valid email address
-      </div>
 
       <button>Submit</button>
 
