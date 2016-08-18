@@ -1,3 +1,7 @@
+var Dashboard = require('webpack-dashboard');
+var DashboardPlugin = require('webpack-dashboard/plugin');
+var dashboard = new Dashboard();
+
 import 'core-js/es6';
 import 'core-js/es7/reflect';
 import 'ts-helpers';
@@ -100,6 +104,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
 
     plugins: [
+      new DashboardPlugin(dashboard.setData),
       // fix angular2
       new ContextReplacementPlugin(
         // The (\\|\/) piece accounts for path separators in *nix and Windows
@@ -121,6 +126,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     },
 
     devServer: {
+      quiet: true,
       contentBase: './src',
       port: CONSTANTS.PORT,
       hot: CONSTANTS.HMR,
@@ -167,7 +173,9 @@ interface WebpackConfig {
   output: any;
   module?: any;
   // module?: {
-  //   loaders?: Array<any>
+  //   preLoaders?: Array<any>;
+  //   loaders?: Array<any>;
+  //   postLoaders?: Array<any>
   // };
   plugins?: Array<any>;
   resolve?: {
@@ -175,6 +183,7 @@ interface WebpackConfig {
     extensions?: Array<string>;
   };
   devServer?: {
+    quiet?: boolean,
     contentBase?: string;
     port?: number;
     historyApiFallback?: boolean;
