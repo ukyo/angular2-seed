@@ -1,11 +1,8 @@
-var Dashboard = require('webpack-dashboard');
-var DashboardPlugin = require('webpack-dashboard/plugin');
-var dashboard = new Dashboard();
-
 import 'core-js/es6';
 import 'core-js/es7/reflect';
 import 'ts-helpers';
 // needed to create context for resolveNgRoute
+
 /**
  * @author: @AngularClass
  */
@@ -23,6 +20,9 @@ const {
 } = require('webpack');
 const {ForkCheckerPlugin} = require('awesome-typescript-loader');
 const resolveNgRoute = require('@angularclass/resolve-angular-routes')
+const Dashboard = require('webpack-dashboard');
+const DashboardPlugin = require('webpack-dashboard/plugin');
+const dashboard = new Dashboard();
 
 const path = require('path');
 
@@ -104,7 +104,6 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
 
     plugins: [
-      new DashboardPlugin(dashboard.setData),
       // fix angular2
       new ContextReplacementPlugin(
         // The (\\|\/) piece accounts for path separators in *nix and Windows
@@ -114,6 +113,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
       ),
       // end angular2 fix
 
+      new DashboardPlugin(dashboard.setData),
       new HotModuleReplacementPlugin(),
       new ForkCheckerPlugin(),
       new CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity }),
