@@ -68,8 +68,8 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
           test: /(systemjs_component_resolver|system_js_ng_module_factory_loader)\.js$/,
           loader: 'string-replace-loader',
           query: {
-            search: '(lang_1(.*[\\n\\r]\\s*\\.|\\.))?(global(.*[\\n\\r]\\s*\\.|\\.))?(System|SystemJS)(.*[\\n\\r]\\s*\\.|\\.)import',
-            replace: 'System.import',
+            search: '(lang_1(.*[\\n\\r]\\s*\\.|\\.))?(global(.*[\\n\\r]\\s*\\.|\\.))?(System|SystemJS)(.*[\\n\\r]\\s*\\.|\\.)import\\((.+)\\)',
+            replace: '$5.import($7)',
             flags: 'g'
           }
         },
