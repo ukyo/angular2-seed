@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser'
-import { RouterModule, RouterConfig } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ANGULARCLASS_FORM_VALIDATOR_DIRECTIVES } from '@angularclass/form-validators';
