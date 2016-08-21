@@ -10,8 +10,7 @@
     "lib": ["es5", "dom"],
     "strictNullChecks": false,
     "baseUrl": "./src",
-    "paths": {
-    },
+    "paths": [],
     "types": [
       "core-js",
       "node"
@@ -22,7 +21,8 @@
   ],
   "awesomeTypescriptLoaderOptions": {
     "useWebpackText": true,
-    "forkChecker": true
+    "forkChecker": true,
+    "useCache": true
   },
   "compileOnSave": false,
   "buildOnSave": false,
