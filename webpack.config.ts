@@ -35,6 +35,8 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     HTTPS: false
   };
 
+  const polyfills = require(root('./src/dll')).polyfills(options);
+
   return {
     cache: true,
     // devtool: 'hidden-source-map',
@@ -42,7 +44,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     // devtool: 'cheap-module-eval-source-map',
 
     entry: {
-      main: './src/main.browser'
+      main: polyfills.concat('./src/main.browser')
     },
 
     output: {
