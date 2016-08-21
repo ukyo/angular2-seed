@@ -39,6 +39,7 @@ export function vendors(env?: any) {
   return [
     '@angular/platform-browser',
     '@angular/platform-browser-dynamic',
+    '@angular/compiler',
     '@angular/router',
     '@angular/forms',
     '@angular/common',
@@ -46,7 +47,11 @@ export function vendors(env?: any) {
     '@angular/http',
 
     '@angularclass/form-validators',
+    '@angularclass/hmr',
 
+    'rxjs/Observable',
+    'rxjs/Subject',
+    'rxjs/Subscription',
     'rxjs/add/operator/map',
     'rxjs/add/operator/mergeMap',
   ];
