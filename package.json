@@ -13,9 +13,13 @@
     "start": "npm run server:dev",
     "start:hmr": "npm run server:dev -- --env.HMR",
     "server:dev": "webpack-dev-server --env.ENV development",
-    "prebuild": "rm -rf dist",
+    "debug:start": "node-nightly --inspect --debug-brk node_modules/webpack-dev-server/bin/webpack-dev-server.js --env.ENV development",
     "debug:build": "node-nightly --inspect --debug-brk node_modules/webpack/bin/webpack.js --env.ENV development",
-    "build": "webpack --env.ENV development"
+    "predll": "rimraf dist/dll/*.*",
+    "dll": "webpack --config webpack.dll.ts --env.ENV development",
+    "prebuild": "rimraf dist/*.*",
+    "build": "webpack --env.ENV development",
+    "build:hmr": "npm run build -- --env.HMR"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.5",
@@ -30,6 +34,8 @@
     "@angularclass/conventions-loader": "^1.0.12",
     "@angularclass/form-validators": "^1.0.11",
     "@angularclass/resolve-angular-routes": "^1.0.8",
+    "@angularclass/hmr-loader": "^1.0.0",
+    "@angularclass/hmr": "^1.0.0",
     "core-js": "^2.2.0",
     "rxjs": "5.0.0-beta.6",
     "zone.js": "^0.6.15"
@@ -38,6 +44,7 @@
     "@types/core-js": "^0.9.28",
     "@types/node": "^4.0.30",
     "awesome-typescript-loader": "^2.2.1",
+    "cross-spawn": "^4.0.0",
     "es6-promise": "^3.1.2",
     "es6-shim": "^0.35.0",
     "ie-shim": "^0.1.0",
