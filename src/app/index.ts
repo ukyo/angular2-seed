@@ -1,11 +1,11 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import homeModule, { Home } from './home';
+import HomeModule from './home';
 
-const ROUTER_CONFIG = [
-  { path: '', component: Home, pathMatch: 'full' },
-  { path: 'about', loadChildren: './+about' },
+export const ROUTER_CONFIG = [
+  { path: '', loadChildren: () => HomeModule },
+  { path: 'about', loadChildren: () => System.import('./+about') },
 ];
 
 @NgModule({
@@ -13,11 +13,9 @@ const ROUTER_CONFIG = [
   ],
   declarations: [
     // Components / Directives/ Pipes
-    Home,
   ],
   imports: [
     RouterModule.forChild(ROUTER_CONFIG),
-    homeModule,
   ],
 })
 export default class AppModule {
