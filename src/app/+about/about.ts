@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
             #inputEmail="ngModel"
             name="inputEmail"
             [(ngModel)]="email"
-            ac-is-email
+            acIsEmail
           >
         </label>
       </div>
