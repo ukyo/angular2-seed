@@ -17,7 +17,8 @@ npm start
 * AngularClass
   * @angularclass/form-validator
   * @angularclass/conventions-loader
-  * angular2/hmr
+  * @angularclass/hmr-loader
+  * @angularclass/hmr
 
 Everything in this repo will be merged into [angular2-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter)
 
