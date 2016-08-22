@@ -169,12 +169,12 @@ function getManifest(__path) {
 function getDllAssets(chunk) {
   var assets =  tryDll(() => require(root('./dist/dll/webpack-assets.json')));
   // {"vendors":{"js":"vendors.js"},"polyfills":{"js":"polyfills.js"}}
-  return assets[chunk].js
+  return assets[chunk]['js']
 }
 function getAssets(chunk) {
   var assets =  tryDll(() => require(root('./dist/webpack-assets.json')));
   // {"vendors":{"js":"vendors.js"},"polyfills":{"js":"polyfills.js"}}
-  return assets[chunk].js
+  return assets[chunk]['js']
 }
 function tryDll(cb) {
   try {
