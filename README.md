@@ -9,7 +9,9 @@ npm start
 
 ## Features
 * Webpack 2
-  * `System.import`
+  * `System.import` (with synthetic default imports)
+  * DLL files
+  * HMR
 * TypeScript 2
   * @types
 * Angular 2
