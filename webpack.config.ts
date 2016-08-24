@@ -34,8 +34,9 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     HOST: 'localhost',
     HTTPS: false
   };
-
-  const polyfills = require(root('./src/dll')).polyfills(options);
+  const DLL = require(root('./src/dll'));
+  const polyfills = DLL.polyfills(options);
+  const rxjs = DLL.rxjs(options);
 
   return {
     cache: true,
@@ -44,7 +45,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     // devtool: 'cheap-module-eval-source-map',
 
     entry: {
-      main: polyfills.concat('./src/main.browser')
+      main: [].concat(polyfills, './src/main.browser', rxjs)
     },
 
     output: {
@@ -114,6 +115,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
     resolve: {
       extensions: ['', '.ts', '.js', '.json'],
+      // unsafeCache: true
     },
 
     devServer: {

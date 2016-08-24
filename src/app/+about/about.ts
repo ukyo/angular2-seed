@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppStore } from '../app-store';
 
 @Component({
   template: `
@@ -29,14 +30,20 @@ export class About {
   localState = {
     email: ''
   };
-  constructor() {
+  constructor(public appStore: AppStore) {
   }
 
   onSubmit(value, form) {
     if (form.valid) {
       console.log('form value', value);
-    } else {
-      console.log('form invalid');
+
+      let newState = Object.assign({}, value);
+      this.appStore.setState(newState);
+
+      return form.reset(); // doesn't work right now
     }
+
+    console.log('form invalid');
+
   }
 }

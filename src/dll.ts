@@ -1,3 +1,12 @@
+/*
+ * README
+ * any changes to this file and you have to run `npm run dll` to generate the bundle
+ *
+ * Polyfills
+ * Vendors
+ * RxJS
+ */
+
 // Polyfills
 export function polyfills(env?: any) {
   return [
@@ -32,10 +41,8 @@ export function polyfills(env?: any) {
   ];
 }
 
-
-
-export function vendors(env?: any) {
 // Angular 2 and other Vendor imports
+export function vendors(env?: any) {
   return [
     '@angular/platform-browser',
     '@angular/platform-browser-dynamic',
@@ -48,11 +55,18 @@ export function vendors(env?: any) {
 
     '@angularclass/form-validators',
     '@angularclass/hmr',
+  ];
+}
 
+// RxJS
+export function rxjs(env?: any) {
+  return [
     'rxjs/Observable',
-    'rxjs/Subject',
     'rxjs/Subscription',
+    'rxjs/Subject',
+    'rxjs/BehaviorSubject',
     'rxjs/add/operator/map',
     'rxjs/add/operator/mergeMap',
+    'rxjs/add/operator/distinctUntilChanged',
   ];
 }

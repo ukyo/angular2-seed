@@ -22,6 +22,7 @@ interface WebpackConfig {
   // };
   plugins?: Array<any>;
   resolve?: {
+    unsafeCache?: boolean | Array<string>;
     root?: string;
     extensions?: Array<string>;
   };
