@@ -3,8 +3,24 @@
 
 
 ```
+# clone our repo
+# --depth 1 removes all but one .git commit history
+git clone --depth 1 https://github.com/angularclass/angular2-seed.git
+
+# change directory to our repo
+cd angular2-seed
+
+# install the repo with npm
 npm install
+
+# start the server
 npm start
+
+# use Hot Module Replacement
+npm run server:dev:hmr
+
+# if you're in China use cnpm
+# https://github.com/cnpm/cnpm
 ```
 
 ## Features
