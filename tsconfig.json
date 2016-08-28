@@ -3,7 +3,7 @@
     "target": "es5",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": false,
+    "allowSyntheticDefaultImports": true,
     "noEmitHelpers": true,
     "pretty": true,
     "sourceMap": true,
