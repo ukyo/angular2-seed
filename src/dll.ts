@@ -8,7 +8,7 @@
  */
 
 // Polyfills
-export function polyfills(env?: any) {
+export function polyfills(opt?: any) {
   return [
     // 'ie-shim',
 
@@ -33,16 +33,19 @@ export function polyfills(env?: any) {
     'core-js/es7/reflect',
 
     // zone.js
-    'zone.js/dist/zone',
-    'zone.js/dist/long-stack-trace-zone',
+    ...(isDev(opt.ENV) ?
+      ['zone.js/dist/zone', 'zone.js/dist/long-stack-trace-zone'] :
+      ['zone.js/dist/zone']
+    ),
 
     // typescript helpers
     'ts-helpers',
+    // run `npm run dll` if you change this
   ];
 }
 
 // Angular 2 and other Vendor imports
-export function vendors(env?: any) {
+export function vendors(opt?: any) {
   return [
     '@angular/platform-browser',
     '@angular/platform-browser-dynamic',
@@ -55,11 +58,12 @@ export function vendors(env?: any) {
 
     '@angularclass/form-validators',
     '@angularclass/hmr',
+    // run `npm run dll` if you change this
   ];
 }
 
 // RxJS
-export function rxjs(env?: any) {
+export function rxjs(opt?: any) {
   return [
     'rxjs/Observable',
     'rxjs/Subscription',
@@ -68,5 +72,10 @@ export function rxjs(env?: any) {
     'rxjs/add/operator/map',
     'rxjs/add/operator/mergeMap',
     'rxjs/add/operator/distinctUntilChanged',
+    // run `npm run dll` if you change this
   ];
 }
+
+
+function isProd(env) { return env.indexOf('production') !== -1; }
+function isDev(env) { return env.indexOf('development') !== -1; }

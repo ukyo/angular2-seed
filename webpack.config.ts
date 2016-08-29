@@ -20,12 +20,14 @@ const AssetsPlugin = require('assets-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
 
-function root(__path = '.') {
-  return path.join(__dirname, __path);
-}
+function root(__path = '.') { return path.join(__dirname, __path); }
+function isProd(env) { return env.indexOf('production') !== -1; }
+function isDev(env) { return env.indexOf('development') !== -1; }
+function join(...args) { return [].concat(...args); }
 
 // type definition for WebpackConfig is defined in webpack.d.ts
 function webpackConfig(options: EnvOptions = {}): WebpackConfig {
+  console.log('\nEnvOptions\n' + JSON.stringify(options, null, 2) + '\n');
 
   const CONSTANTS = {
     ENV: JSON.stringify(options.ENV),
@@ -45,14 +47,15 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     // devtool: 'cheap-module-eval-source-map',
 
     entry: {
-      main: [].concat(polyfills, './src/main.browser', rxjs)
+      main: join(polyfills, './src/main.browser', rxjs)
     },
 
     output: {
       path: root('dist'),
       filename: '[name].bundle.js',
       sourceMapFilename: '[name].map',
-      chunkFilename: '[id].chunk.js'
+      chunkFilename: '[id].chunk.js',
+      pathinfo: isDev(CONSTANTS.ENV)
     },
 
     module: {
@@ -115,15 +118,11 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
     resolve: {
       extensions: ['', '.ts', '.js', '.json'],
-      // unsafeCache: true
+      unsafeCache: true
     },
 
     devServer: {
       setup: (app) => {
-        // express middleware
-        app.get('/', (req, res) => {
-          res.sendFile(root('src/index.html'));
-        });
         app.get('/dll/*', (req, res) => {
           var files = req.path.split('/');
           var chunk = files[files.length -1].replace('.js', '');
@@ -135,7 +134,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
       port: CONSTANTS.PORT,
       hot: CONSTANTS.HMR,
       inline: CONSTANTS.HMR,
-      historyApiFallback: true,
+      historyApiFallback: { verbose: true },
       host: CONSTANTS.HOST,
       https: CONSTANTS.HTTPS
     },
@@ -171,7 +170,13 @@ function getManifest(__path) {
 function getDllAssets(chunk) {
   var assets =  tryDll(() => require(root('./dist/dll/webpack-assets.json')));
   // {"vendors":{"js":"vendors.js"},"polyfills":{"js":"polyfills.js"}}
-  return assets[chunk]['js']
+  var filePath;
+  try {
+    filePath = assets[chunk]['js'];
+  } catch(e) {
+    filePath = root('./dist/dll/' + chunk + '.js');
+  }
+  return filePath
 }
 function getAssets(chunk) {
   var assets =  tryDll(() => require(root('./dist/webpack-assets.json')));

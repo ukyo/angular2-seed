@@ -33,6 +33,8 @@ import {polyfills, vendors} from './src/dll';
 
 // type definition for WebpackConfig is defined in webpack.d.ts
 function webpackConfig(options: EnvOptions = {}): WebpackConfig {
+  console.log('\nEnvOptions\n' + JSON.stringify(options, null, 2) + '\n');
+
   return {
     devtool: '#source-map',
     entry: {
@@ -42,8 +44,8 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
     output: {
       path: root('dist/dll'),
-      filename: '[name].[hash].js',
-      sourceMapFilename: '[name].[hash].map',
+      filename: '[name].js',
+      sourceMapFilename: '[name].map',
       library: "__[name]"
     },
 

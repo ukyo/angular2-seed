@@ -33,7 +33,7 @@ interface WebpackConfig {
     quiet?: boolean,
     contentBase?: string;
     port?: number;
-    historyApiFallback?: boolean;
+    historyApiFallback?: boolean | any;
     hot?: boolean;
     inline?: boolean;
     host?: string;
