@@ -63,7 +63,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
           loader: 'string-replace-loader',
           query: {
             search: '(System|SystemJS)(.*[\\n\\r]\\s*\\.|\\.)import\\((.+)\\)',
-            replace: '$1.import($3).then(mod => mod.__esModule ? mod.default : mod)',
+            replace: '$1.import($3).then(mod => (mod.__esModule && mod.default) ? mod.default : mod)',
             flags: 'g'
           },
           include: [root('src')]
