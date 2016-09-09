@@ -34,6 +34,9 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     HOST: 'localhost',
     HTTPS: false
   };
+  console.log('CONSTANTS', JSON.stringify(CONSTANTS, null, 2));
+  const isProd = options.ENV.indexOf('prod') !== -1;
+
   const DLL = require(root('./src/dll'));
   const polyfills = DLL.polyfills(options);
   const rxjs = DLL.rxjs(options);
@@ -74,7 +77,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
         {
           test: /\.ts$/,
           loaders: [
-            '@angularclass/hmr-loader?pretty=' + CONSTANTS.HMR + '&prod=' + CONSTANTS.HMR,
+            '@angularclass/hmr-loader?pretty=' + !isProd + '&prod=' + isProd,
             'awesome-typescript-loader',
             '@angularclass/conventions-loader',
           ],

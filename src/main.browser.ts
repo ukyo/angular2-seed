@@ -37,20 +37,18 @@ class MainModule {
   constructor(public appRef: ApplicationRef, public appStore: AppStore) {}
   hmrOnInit(store) {
     if (!store || !store.state) return;
-    console.log('HMR store', store);
+    console.log('HMR store', JSON.stringify(store, null, 2));
     // restore state
-    const newState = Object.assign({}, store);
-    this.appStore.setState(store);
-
+    this.appStore.setState(store.state);
     // restore input values
-    if ('restoreInputValues' in store) {
-      store.restoreInputValues();
-    }
+    if ('restoreInputValues' in store) { store.restoreInputValues(); }
+    this.appRef.tick();
+    Object.keys(store).forEach(prop => delete store[prop]);
   }
   hmrOnDestroy(store) {
     const cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
     const currentState = this.appStore.getState();
-    Object.assign(store, currentState);
+    store.state = currentState;
     // recreate elements
     store.disposeOldHosts = createNewHosts(cmpLocation);
     // save input values
