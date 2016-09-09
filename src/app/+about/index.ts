@@ -12,11 +12,11 @@ export const ROUTER_CONFIG = [
 
 @NgModule({
   declarations: [
+    // Components / Directives/ Pipes
     About,
     ...ANGULARCLASS_FORM_VALIDATOR_DIRECTIVES
   ],
   imports: [
-    // Components / Directives/ Pipes
     RouterModule.forChild(ROUTER_CONFIG),
     FormsModule,
     CommonModule
