@@ -74,7 +74,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
         {
           test: /\.ts$/,
           loaders: [
-            '@angularclass/hmr-loader',
+            '@angularclass/hmr-loader?pretty=' + HMR + '&prod=' + HMR,
             'awesome-typescript-loader',
             '@angularclass/conventions-loader',
           ],
