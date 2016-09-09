@@ -74,9 +74,9 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
         {
           test: /\.ts$/,
           loaders: [
+            '@angularclass/hmr-loader',
             'awesome-typescript-loader',
             '@angularclass/conventions-loader',
-            '@angularclass/hmr-loader'
           ],
           exclude: [/\.(spec|e2e|d)\.ts$/],
           include: [root('./src')]
