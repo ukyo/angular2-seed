@@ -36,24 +36,37 @@ import appModule from './app';
 class MainModule {
   constructor(public appRef: ApplicationRef, public appStore: AppStore) {}
   hmrOnInit(store) {
+    if (!store || !store.state) return;
     console.log('HMR store', store);
-    if (store) {
-      let newState = Object.assign({}, store);
-      this.appStore.setState(store);
+    // restore state
+    const newState = Object.assign({}, store);
+    this.appStore.setState(store);
+
+    // restore input values
+    const inputs = document.querySelectorAll('input');
+    if (store.$inputs && inputs.length === store.$inputs.length) {
+      store.$inputs.forEach((value, i) => {
+        const el = inputs[i];
+        el.value = value;
+        el.dispatchEvent(new CustomEvent('input', {detail: el.value}));
+      });
     }
   }
   hmrOnDestroy(store) {
-    var cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
-    var currentState = this.appStore.getState();
+    const cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
+    const currentState = this.appStore.getState();
     Object.assign(store, currentState);
     // recreate elements
-    store.disposeOldHosts = createNewHosts(cmpLocation)
+    store.disposeOldHosts = createNewHosts(cmpLocation);
+    // save input values
+    const inputs = document.querySelectorAll('input');
+    store.$inputs = [].slice.call(inputs).map(input => input.value);
     // remove styles
     removeNgStyles();
   }
   hmrAfterDestroy(store) {
     // display new elements
-    store.disposeOldHosts()
+    store.disposeOldHosts();
     delete store.disposeOldHosts;
   }
 }
