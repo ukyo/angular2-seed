@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgModule, ApplicationRef } from '@angular/core';
-import { removeNgStyles, createNewHosts, bootloader } from '@angularclass/hmr';
+import { removeNgStyles, createNewHosts, createInputTransfer, bootloader } from '@angularclass/hmr';
 
 import { App } from './app/app';
 import { AppStore } from './app/app-store';
@@ -43,13 +43,8 @@ class MainModule {
     this.appStore.setState(store);
 
     // restore input values
-    const inputs = document.querySelectorAll('input');
-    if (store.$inputs && inputs.length === store.$inputs.length) {
-      store.$inputs.forEach((value, i) => {
-        const el = inputs[i];
-        el.value = value;
-        el.dispatchEvent(new CustomEvent('input', {detail: el.value}));
-      });
+    if ('restoreInputValues' in store) {
+      store.restoreInputValues();
     }
   }
   hmrOnDestroy(store) {
@@ -59,8 +54,7 @@ class MainModule {
     // recreate elements
     store.disposeOldHosts = createNewHosts(cmpLocation);
     // save input values
-    const inputs = document.querySelectorAll('input');
-    store.$inputs = [].slice.call(inputs).map(input => input.value);
+    store.restoreInputValues  = createInputTransfer();
     // remove styles
     removeNgStyles();
   }
