@@ -19,6 +19,5 @@ export const ROUTER_CONFIG = [
   ],
 })
 export default class AppModule {
-  static routes = ROUTER_CONFIG
+  static routes = ROUTER_CONFIG;
 }
-
