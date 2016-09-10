@@ -29,7 +29,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
   const CONSTANTS = {
     ENV: JSON.stringify(options.ENV),
-    HMR: options.HMR,
+    HMR: Boolean(options.HMR),
     PORT: 3000,
     HOST: 'localhost',
     HTTPS: false
@@ -108,13 +108,12 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
       }),
 
       new TsConfigPathsPlugin(/* { tsconfig, compiler } */),
-      new HotModuleReplacementPlugin(),
       new ForkCheckerPlugin(),
       new DefinePlugin(CONSTANTS),
       new ProgressPlugin({}),
 
 
-    ],
+    ].concat(CONSTANTS.HMR ? new HotModuleReplacementPlugin() : []),
 
     resolve: {
       extensions: ['', '.ts', '.js', '.json'],
@@ -129,11 +128,12 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
         });
         app.get('/dll/*', (req, res) => {
           var files = req.path.split('/');
-          var chunk = files[files.length -1].replace('.js', '');
-          if(chunk.split('.').length<2)
-            res.sendFile(root('dist/dll/'+ getDllAssets(chunk)));
-          else
-            res.sendFile(root('dist/dll/'+chunk));
+          var chunk = files[files.length - 1].replace('.js', '');
+          if (chunk.split('.').length < 2) {
+            res.sendFile(root('dist/dll/' + getDllAssets(chunk)));
+          } else {
+            res.sendFile(root('dist/dll/' + chunk));
+          }
         });
       },
       compress: true,
@@ -171,23 +171,23 @@ function getManifest(__path) {
   var __fs = fs || require('fs');
   var manifest = tryDll(() => JSON.parse(__fs.readFileSync(root('./dist/dll/' + __path + '-manifest.json'), 'utf8')
       // TODO(gdi2290): workaround until webpack fixes dll generation
-        .replace(/}(.*[\n\r]\s*)}(.*[\n\r]\s*)}"activeExports": \[\]/, '')))
+        .replace(/}(.*[\n\r]\s*)}(.*[\n\r]\s*)}"activeExports": \[\]/, '')));
   return manifest;
 }
 function getDllAssets(chunk) {
   var assets =  tryDll(() => require(root('./dist/dll/webpack-assets.json')));
   // {"vendors":{"js":"vendors.js"},"polyfills":{"js":"polyfills.js"}}
-  return assets[chunk]['js']
+  return assets[chunk]['js'];
 }
 function getAssets(chunk) {
   var assets =  tryDll(() => require(root('./dist/webpack-assets.json')));
   // {"vendors":{"js":"vendors.js"},"polyfills":{"js":"polyfills.js"}}
-  return assets[chunk]['js']
+  return assets[chunk]['js'];
 }
 function tryDll(cb) {
   try {
-    return cb()
-  } catch(e) {
+    return cb();
+  } catch (e) {
     console.info("Initializing `%s`...", "DLL files");
     var spawn: any = require('cross-spawn');
     spawn.sync("npm", ["run", "dll"], { stdio: "inherit" });

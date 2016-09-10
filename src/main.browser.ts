@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import { NgModule, ApplicationRef } from '@angular/core';
+import { NgModule, ApplicationRef, enableProdMode } from '@angular/core';
 import { removeNgStyles, createNewHosts, createInputTransfer, bootloader } from '@angularclass/hmr';
 
 import { App } from './app/app';
@@ -36,7 +36,7 @@ import appModule from './app';
 class MainModule {
   constructor(public appRef: ApplicationRef, public appStore: AppStore) {}
   hmrOnInit(store) {
-    if (!store || !store.state) return;
+    if (!store || !store.state) { return; }
     console.log('HMR store', JSON.stringify(store, null, 2));
     // restore state
     this.appStore.setState(store.state);

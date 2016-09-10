@@ -54,21 +54,23 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
           test: /(systemjs_component_resolver|system_js_ng_module_factory_loader)\.js$/,
           loader: 'string-replace-loader',
           query: {
-            search: '(lang_1(.*[\\n\\r]\\s*\\.|\\.))?(global(.*[\\n\\r]\\s*\\.|\\.))?(System|SystemJS)(.*[\\n\\r]\\s*\\.|\\.)import\\((.+)\\)',
+            search: '(lang_1(.*[\\n\\r]\\s*\\.|\\.))?' +
+              '(global(.*[\\n\\r]\\s*\\.|\\.))?' +
+              '(System|SystemJS)(.*[\\n\\r]\\s*\\.|\\.)import\\((.+)\\)',
             replace: '$5.import($7)',
             flags: 'g'
           },
           include: [root('node_modules/@angular/core')]
         },
         {
-          test: /.js$/,
+          test: /\.js$/,
           loader: 'string-replace-loader',
           query: {
             search: 'moduleId: module.id,',
             replace: '',
             flags: 'g'
           }
-        }
+        },
         // end angular2 fix
       ],
 
@@ -82,7 +84,16 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
       ],
       postLoaders: [
         {
-          test: /.json$/,
+          test: /\.js$/,
+          loader: 'string-replace-loader',
+          query: {
+            search: 'var sourceMappingUrl = extractSourceMappingUrl\\(cssText\\);',
+            replace: 'var sourceMappingUrl = "";',
+            flags: 'g'
+          }
+        },
+        {
+          test: /\.json$/,
           loader: 'string-replace-loader',
           query: {
             search: '}(.*[\\n\\r]\\s*)}(.*[\\n\\r]\\s*)}"activeExports": \\[\\]',
