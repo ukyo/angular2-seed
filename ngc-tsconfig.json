@@ -17,9 +17,15 @@
       "node"
     ]
   },
-  "exclude": [
-    "node_modules"
+  "include": [
+    "./src/app",
+    "./src/app/+about/index.ts",
+    "./src/main.browser.ts"
   ],
+  "angularCompilerOptions": {
+    "debug": true,
+    "genDir": "./src/node_modules/ngfactory"
+  },
   "awesomeTypescriptLoaderOptions": {
     "useWebpackText": true,
     "forkChecker": true,

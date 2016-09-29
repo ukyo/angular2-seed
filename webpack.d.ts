@@ -22,7 +22,10 @@ interface WebpackConfig {
   // };
   plugins?: Array<any>;
   resolve?: {
+    alias?: any;
     unsafeCache?: boolean | Array<string>;
+    mainFields?: string[];
+    mainFiles?: string[];
     root?: string;
     extensions?: Array<string>;
   };

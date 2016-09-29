@@ -24,6 +24,7 @@ import * as _ from 'lodash'
 // Extra variables that live on Global that will be replaced by webpack DefinePlugin
 declare var ENV: string;
 declare var HMR: boolean;
+declare var AOT: boolean;
 declare var System: SystemJS;
 
 interface SystemJS {
@@ -33,6 +34,7 @@ interface SystemJS {
 interface GlobalEnvironment {
   ENV;
   HMR;
+  AOT;
   SystemJS: SystemJS;
   System: SystemJS;
 }

@@ -10,12 +10,14 @@ const {
 
   optimize: {
     CommonsChunkPlugin,
-    DedupePlugin
+    DedupePlugin,
+    UglifyJsPlugin
   }
 
 } = require('webpack');
 const { ConcatSource } = require('webpack-sources');
 const { ForkCheckerPlugin, TsConfigPathsPlugin } = require('awesome-typescript-loader');
+const { NgcWebpackPlugin } = require('@ngtools/webpack');
 const AssetsPlugin = require('assets-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
@@ -28,6 +30,7 @@ function root(__path = '.') {
 function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
   const CONSTANTS = {
+    AOT: Boolean(options.AOT),
     ENV: JSON.stringify(options.ENV),
     HMR: Boolean(options.HMR),
     PORT: 3000,
@@ -48,7 +51,11 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     // devtool: 'cheap-module-eval-source-map',
 
     entry: {
-      main: [].concat(polyfills, './src/main.browser', rxjs)
+      main: [].concat(
+        polyfills,
+        CONSTANTS.AOT ? './src/browser.aot.ts' : './src/browser.jit.ts',
+        rxjs
+      )
     },
 
     output: {
@@ -60,22 +67,10 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
     module: {
       // allowSyntheticDefaultImports for System.import
-      preLoaders: [
-        {
-          test: /\.ts$/,
-          loader: 'string-replace-loader',
-          query: {
-            search: '(System|SystemJS)(.*[\\n\\r]\\s*\\.|\\.)import\\((.+)\\)',
-            replace: '$1.import($3).then(mod => (mod.__esModule && mod.default) ? mod.default : mod)',
-            flags: 'g'
-          },
-          include: [root('src')]
-        },
-      ],
       loaders: [
         // Support for .ts files.
         {
-          test: /\.ts$/,
+          test: /(\.ngfactory)?\.ts$/,
           loaders: [
             '@angularclass/hmr-loader?pretty=' + !isProd + '&prod=' + isProd,
             'awesome-typescript-loader',
@@ -98,6 +93,38 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
         filename: 'webpack-assets.json',
         prettyPrint: true
       }),
+
+      new TsConfigPathsPlugin(/* { tsconfig, compiler } */),
+      new ForkCheckerPlugin(),
+      new DefinePlugin(CONSTANTS),
+      new ProgressPlugin({}),
+
+
+    ]
+    .concat(CONSTANTS.HMR ? [
+      new HotModuleReplacementPlugin()
+     ] : [])
+    .concat(options.SERVER ? [] : [
+      new NgcWebpackPlugin({
+        project: './ngc-tsconfig.json',
+        baseDir: root('.'),
+        entryModule: root('./src/main.browser#MainModule')
+      })
+    ])
+    .concat(isProd ? [
+      // prod
+      new UglifyJsPlugin({
+        compress: {
+          warnings: false
+        }
+      }),
+      new ContextReplacementPlugin(
+        // The (\\|\/) piece accounts for path separators in *nix and Windows
+        /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+        root('./src')
+      ),
+    ] : [
+      // dev
       new DllReferencePlugin({
         context: '.',
         manifest: getManifest('vendors'),
@@ -106,17 +133,12 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
         context: '.',
         manifest: getManifest('polyfills'),
       }),
-
-      new TsConfigPathsPlugin(/* { tsconfig, compiler } */),
-      new ForkCheckerPlugin(),
-      new DefinePlugin(CONSTANTS),
-      new ProgressPlugin({}),
-
-
-    ].concat(CONSTANTS.HMR ? new HotModuleReplacementPlugin() : []),
+    ]),
 
     resolve: {
-      extensions: ['', '.ts', '.js', '.json'],
+      extensions: ['.ts', '.js', '.json'],
+      mainFields: ['module', 'jsnext:main', 'main', 'browser'],
+      mainFiles: ['index', 'index.ngfactory']
       // unsafeCache: true
     },
 
@@ -147,7 +169,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     },
 
     node: {
-      global: 'window',
+      global: true,
       process: true,
       Buffer: false,
       crypto: 'empty',

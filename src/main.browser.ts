@@ -1,4 +1,3 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -8,7 +7,7 @@ import { removeNgStyles, createNewHosts, createInputTransfer, bootloader } from 
 
 import { App } from './app/app';
 import { AppStore } from './app/app-store';
-import appModule from './app';
+import { AppModule } from './app';
 
 @NgModule({
   bootstrap: [
@@ -26,14 +25,14 @@ import appModule from './app';
       useHash: true
     }),
     // app
-    appModule
+    AppModule
     // vendors
   ],
   providers: [
     AppStore
   ]
 })
-class MainModule {
+export class MainModule {
   constructor(public appRef: ApplicationRef, public appStore: AppStore) {}
   hmrOnInit(store) {
     if (!store || !store.state) { return; }
@@ -62,10 +61,3 @@ class MainModule {
     delete store.disposeOldHosts;
   }
 }
-
-export function main() {
-  return platformBrowserDynamic().bootstrapModule(MainModule);
-}
-
-// boot on document ready
-bootloader(main);

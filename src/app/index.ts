@@ -1,11 +1,26 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import HomeModule from './home';
+import { HomeModule } from './home';
+import { HomeModuleNgFactory } from 'ngfactory/src/app/home/index.ngfactory';
+
+export function homeModule(): any {
+  if (AOT) {
+    return HomeModuleNgFactory
+  }
+  return HomeModule;
+}
+
+export function asyncAboutModule() {
+  if (AOT) {
+    return System.import('ngfactory/src/app/+about').then(mod => mod.AboutModule);
+  }
+  return System.import('./+about').then(mod => mod.AboutModule);
+}
 
 export const ROUTER_CONFIG = [
-  { path: '', loadChildren: () => HomeModule },
-  { path: 'about', loadChildren: () => System.import('./+about') },
+  { path: '', loadChildren: homeModule },
+  { path: 'about', loadChildren: asyncAboutModule },
 ];
 
 @NgModule({
@@ -18,6 +33,5 @@ export const ROUTER_CONFIG = [
     RouterModule.forChild(ROUTER_CONFIG),
   ],
 })
-export default class AppModule {
-  static routes = ROUTER_CONFIG;
+export class AppModule {
 }

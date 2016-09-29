@@ -18,6 +18,6 @@ export const ROUTER_CONFIG = [
     RouterModule.forChild(ROUTER_CONFIG)
   ],
 })
-export default class HomeModule {
+export class HomeModule {
 }
 

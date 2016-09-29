@@ -11,13 +11,12 @@ import { AppStore } from '../app-store';
           <input
             #inputEmail="ngModel"
             name="inputEmail"
-            [(ngModel)]="email"
-            acIsEmail
+            [(ngModel)]="localState.email"
           >
         </label>
       </div>
 
-      <div *ngIf="form.submitted && inputEmail?.errors?.isEmail" style="background-color: red">
+      <div *ngIf="form.submitted && inputEmail?.errors" style="background-color: red">
         Please use a valid email address
       </div>
 

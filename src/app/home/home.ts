@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 
 
-@Component({})
+@Component({
+  selector: 'home',
+  templateUrl: './home.html'
+})
 export class Home {
   constructor() {
     console.log('Home');
@@ -9,6 +12,7 @@ export class Home {
 }
 
 @Component({
+  selector: 'yolo',
   template: `
     <div>
       YOLO

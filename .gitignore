@@ -24,7 +24,7 @@ coverage
 build/Release
 
 # Dependency directory
-node_modules
+/node_modules/
 
 # Optional npm cache directory
 .npm
@@ -40,3 +40,5 @@ node_modules
 /generated
 .awcache
 .DS_Store
+/src/node_modules/ngfactory/node_modules/
+/src/node_modules/ngfactory/src/
