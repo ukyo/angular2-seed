@@ -60,7 +60,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
     module: {
       // allowSyntheticDefaultImports for System.import
-      preLoaders: [
+      loaders: [
         {
           test: /\.ts$/,
           loader: 'string-replace-loader',
@@ -71,8 +71,6 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
           },
           include: [root('src')]
         },
-      ],
-      loaders: [
         // Support for .ts files.
         {
           test: /\.ts$/,
@@ -116,7 +114,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     ].concat(CONSTANTS.HMR ? new HotModuleReplacementPlugin() : []),
 
     resolve: {
-      extensions: ['', '.ts', '.js', '.json'],
+      extensions: ['.ts', '.js', '.json'],
       // unsafeCache: true
     },
 
@@ -147,7 +145,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     },
 
     node: {
-      global: 'window',
+      global: true,
       process: true,
       Buffer: false,
       crypto: 'empty',

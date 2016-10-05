@@ -48,7 +48,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
     },
 
     module: {
-      preLoaders: [
+      loaders: [
         // fix angular2
         {
           test: /(systemjs_component_resolver|system_js_ng_module_factory_loader)\.js$/,
@@ -72,17 +72,12 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
           }
         },
         // end angular2 fix
-      ],
-
-      loaders: [
         {
           test: /\.ts$/,
           loader: 'awesome-typescript-loader',
           exclude: [root('src/app')],
           include: [root('./src')]
         },
-      ],
-      postLoaders: [
         {
           test: /\.js$/,
           loader: 'string-replace-loader',
