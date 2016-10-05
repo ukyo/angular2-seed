@@ -127,7 +127,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
 
     ],
     node: {
-      global: 'window',
+      global: true,
       process: true,
       Buffer: false,
       crypto: 'empty',
