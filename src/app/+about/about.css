@@ -1,3 +1,7 @@
+:root {
+    --color-foo: #bbb;
+}
+
 .foo {
-    color: #999;
+    color: var(--color-foo);
 }

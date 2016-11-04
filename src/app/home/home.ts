@@ -13,7 +13,8 @@ export class Home {
     <div>
       YOLO
     </div>
-  `
+  `,
+  styleUrls: ['./home.css'],
 })
 export class Yolo {
   constructor() {

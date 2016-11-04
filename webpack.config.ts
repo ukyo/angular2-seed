@@ -85,7 +85,24 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
         },
         { test: /\.json$/, loader: 'json-loader', include: [root('./src')] },
         { test: /\.html/,  loader: 'raw-loader', include: [root('./src')] },
-        { test: /\.css$/,  loader: 'raw-loader', include: [root('./src')] },
+        {
+          test: /\.css$/, 
+          loaders: [
+            'raw-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins() {
+                  return [
+                    require("postcss-cssnext")(),
+                    require("autoprefixer")(),
+                  ];
+                }
+              }
+            }
+          ],
+          include: [root('./src')],
+        },
       ]
 
     },
