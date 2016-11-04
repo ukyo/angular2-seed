@@ -78,6 +78,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
             '@angularclass/hmr-loader?pretty=' + !isProd + '&prod=' + isProd,
             'awesome-typescript-loader',
             '@angularclass/conventions-loader',
+            'angular2-template',
           ],
           exclude: [/\.(spec|e2e|d)\.ts$/],
           include: [root('./src')]

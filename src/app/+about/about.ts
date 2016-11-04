@@ -4,7 +4,7 @@ import { AppStore } from '../app-store';
 @Component({
   template: `
     <h2>About</h2>
-
+    <div class="foo">foo</div>
     <form #form="ngForm" (ngSubmit)="onSubmit(form.value, form)" novalidate>
       <div>
         <label>
@@ -24,7 +24,8 @@ import { AppStore } from '../app-store';
       <button>Submit</button>
 
     </form>
-  `
+  `,
+  styleUrls: ["./about.css"]
 })
 export class About {
   localState = {
