@@ -30,7 +30,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
   const CONSTANTS = {
     ENV: JSON.stringify(options.ENV),
     HMR: Boolean(options.HMR),
-    PORT: 3000,
+    PORT: 4000,
     HOST: 'localhost',
     HTTPS: false
   };
@@ -94,6 +94,7 @@ function webpackConfig(options: EnvOptions = {}): WebpackConfig {
               options: {
                 plugins() {
                   return [
+                    require("postcss-import")(),
                     require("postcss-cssnext")(),
                     require("autoprefixer")(),
                   ];
